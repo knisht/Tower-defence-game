@@ -25,7 +25,7 @@ public class GoldCell extends InformationCell {
 
 	@Override
 	public void refresh() {
-		amount.setText("Gold available: " + Long.toString(gold));
+		amount.setText("Gold available: " + Long.toString(goldAmount));
 		income.setText("Current income: " + Long.toString(goldIncome) + " coins every "
 				+ Long.toString(goldInterval / 1_000_000_000L) + "." + Long.toString((goldInterval / 1_000_000L) % 1000)
 				+ "s");

@@ -1,7 +1,7 @@
 package types.cell;
 
 import static core.World.activePause;
-import static core.World.gold;
+import static core.World.goldAmount;
 import static core.World.goldIncome;
 import static core.World.root;
 
@@ -55,14 +55,14 @@ public class MinerCell extends BuildableCell<Miner> implements EventHandler<Mous
 
 	@Override
 	public void build(Miner target) {
-		if (gold < target.cost)
+		if (goldAmount < target.cost)
 			return;
-		gold -= target.cost;
+		goldAmount -= target.cost;
 		goldIncome += target.income;
 		if (miner != null)
 			miner.destroy();
-		target.x = x;
-		target.y = y;
+		target.setX(x);
+		target.setY(y);
 		miners.add(target);
 		miner = target;
 		miner.cell = this;

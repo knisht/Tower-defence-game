@@ -24,13 +24,13 @@ public class EnemyCell extends InformationCell {
 
 	@Override
 	public void refresh() {
-		left.setText("Enemies left: " + enemyStack.size());
-		if (enemyStack.isEmpty()) {
+		left.setText("Enemies left: " + enemiesStack.size());
+		if (enemiesStack.isEmpty()) {
 			beforeNext.setText("Every enemy is on the field!");
 		} else {
 			beforeNext.setText(
-					"Next enemy in " + Long.toString((timeForDestroying.peek() - time + start) / 1_000_000_000L) + "."
-							+ Long.toString(((timeForDestroying.peek() - time + start) / 1_000_000L) % 1000) + "s");
+					"Next enemy in " + Long.toString((enemiesOutcomeTime.peek() - actionTime + startMoment) / 1_000_000_000L) + "."
+							+ Long.toString(((enemiesOutcomeTime.peek() - actionTime + startMoment) / 1_000_000L) % 1000) + "s");
 		}
 	}
 

@@ -16,7 +16,7 @@ public class Miner extends MovableObject {
 		this.income = income;
 		this.cost = cost;
 		this.setMouseTransparent(true);
-		super.relocate(x + TILE_SIDE / 2 - base.getRadius(), y + TILE_SIDE / 2 - base.getRadius());
+		super.render();
 	}
 
 	public void destroy() {

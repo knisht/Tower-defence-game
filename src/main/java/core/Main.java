@@ -1,6 +1,5 @@
 package core;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.LinkedHashSet;
@@ -24,7 +23,7 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		try {
 			System.setErr(new PrintStream(Maps.log));
-		} catch(IOException e) {
+		} catch (IOException e) {
 			System.out.println("Could not create logger");
 		}
 		Application.launch(args);
@@ -39,48 +38,46 @@ public class Main extends Application {
 
 		TableScreen.showStartScreen(root);
 		mainStage.show();
-		started = false;
+		actionStartedState = false;
 		greetingClosed = false;
-		started = true;
-		actionHappens = false;
-		closeWindows = false;
+		actionStartedState = true;
+		actionHappensState = false;
+		windowsClosed = false;
 
 		AnimationTimer startScreen = new AnimationTimer() {
 
-			long oldnow = 0;
+			long lastFrameMoment = 0;
+
 			@Override
-			public void handle(long now) {
-				//System.out.println(now-oldnow);
+			public void handle(long moment) {
 				if (greetingClosed) {
 					initStartValues();
 				}
 
-				if (actionHappens && !activePause) {
-					if (now-oldnow>15_000_000L) {
-						oldnow = now;
-						actionLoop(now);
-					} else {
-						return;
+				if (actionHappensState && !activePause) {
+					if (moment - lastFrameMoment > 15_000_000L) {
+						lastFrameMoment = moment;
+						actionLoop(moment);
 					}
 				}
 
 				if (activePause) {
-					if (pause != 0)
-						fullPauseTime += now - pause;
-					pause = now;
+					if (currentPauseTime != 0)
+						fullPauseTime += moment - currentPauseTime;
+					currentPauseTime = moment;
 				} else {
-					pause = 0;
+					currentPauseTime = 0;
 				}
 
-				if (startLevel) {
-					startLevel = false;
-					win = false;
-					lose = false;
-					actionHappens = true;
+				if (levelStarted) {
+					levelStarted = false;
+					gameWonState = false;
+					gameLostState = false;
+					actionHappensState = true;
 					initStartValues();
 				}
 
-				if (closeWindows) {
+				if (windowsClosed) {
 					primaryStage.close();
 					stop();
 				}
@@ -94,7 +91,7 @@ public class Main extends Application {
 
 	private void initStartValues() {
 		root = new Group();
-		field = new Field(resourcesAddress+File.separator+"data" + File.separator);
+		field = new Field();
 		mainScene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 		mainStage.setScene(mainScene);
 		bottomMenu = new StateMenu();
@@ -104,11 +101,11 @@ public class Main extends Application {
 		enemies = new LinkedHashSet<>();
 		miners = new LinkedHashSet<>();
 		infowindows = new LinkedHashSet<>();
-		cost = new long[10];
+		// cost = new long[10]; why?
 		goldtime = -1;
-		gold = 0;
+		goldAmount = 0;
 		goldIncome = defaultGoldIncome;
-		pause = 0;
+		currentPauseTime = 0;
 		fullPauseTime = 0;
 
 		mainScene.setOnKeyPressed(event -> {
@@ -117,34 +114,36 @@ public class Main extends Application {
 		});
 
 		greetingClosed = false;
-		actionHappens = true;
+		actionHappensState = true;
 
 	}
 
 	private void actionLoop(long now) {
-		time = now - fullPauseTime;
+		actionTime = now - fullPauseTime;
 		if (goldtime == -1) {
-			start = time;
-			goldtime = time;
+			startMoment = actionTime;
+			goldtime = actionTime;
 		}
-		while (!enemyStack.isEmpty() && (time - start) > timeForDestroying.peek()) {
-			Enemy newEnemy = enemyStack.removeFirst();
-			timeForDestroying.removeFirst();
+		while (!enemiesStack.isEmpty() && (actionTime - startMoment) > enemiesOutcomeTime.peek()) {
+			Enemy newEnemy = enemiesStack.removeFirst();
+			enemiesOutcomeTime.removeFirst();
 			enemies.add(newEnemy);
 			root.getChildren().add(newEnemy);
 		}
 		for (Tower tower : towers) {
-			Bullet bullet = tower.shoot(time);
-			if (bullet != null) {
-				bullets.add(bullet);
+			if (tower.active) {
+				Bullet bullet = tower.shoot(actionTime);
+				if (bullet != null) {
+					bullets.add(bullet);
+				}
 			}
 		}
-		if (time - goldtime > goldInterval) {
-			gold += goldIncome;
-			goldtime = time;
+		for (Bullet bullet : bullets) {
+			bullet.move();
 		}
-		for (Bullet a : bullets) {
-			a.move();
+		if (actionTime - goldtime > goldInterval) {
+			goldAmount += goldIncome;
+			goldtime = actionTime;
 		}
 		int aliveAmount = 0;
 		for (Enemy enemy : enemies) {
@@ -152,16 +151,16 @@ public class Main extends Application {
 				++aliveAmount;
 			enemy.move(now);
 		}
-		if (aliveAmount == 0 && enemyStack.isEmpty()) {
-			win = true;
+		if (aliveAmount == 0 && enemiesStack.isEmpty()) {
+			gameWonState = true;
 		}
 		for (Enemy enemy : enemies) {
-			enemy.die();
+			enemy.tryToDie();
 		}
-		if (win || lose) {
-			actionHappens = false;
+		if (gameWonState || gameLostState) {
+			actionHappensState = false;
 			root = new Group();
-			if (win) {
+			if (gameWonState) {
 				TableScreen.showWinScreen(root);
 			} else {
 				TableScreen.showLoseScreen(root);

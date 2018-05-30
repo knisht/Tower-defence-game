@@ -1,7 +1,7 @@
 package types.cell;
 
 import static core.World.activePause;
-import static core.World.gold;
+import static core.World.goldAmount;
 
 import core.Bomb;
 import javafx.event.EventHandler;
@@ -32,11 +32,11 @@ public class RoadCell extends BuildableCell<Bomb> implements EventHandler<MouseE
 
 	@Override
 	public void build(Bomb target) {
-		if (gold < target.getCost())
+		if (goldAmount < target.getCost())
 			return;
-		gold -= target.getCost();
-		target.x = x;
-		target.y = y;
+		goldAmount -= target.getCost();
+		target.setX(x);
+		target.setY(y);
 		target.explode();
 		
 	}

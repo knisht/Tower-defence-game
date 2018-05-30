@@ -32,23 +32,25 @@ public class Field extends StackPane {
 	public Cell[][] tiles;
 	public SpawnCell startCell;
 
-	public Field(String path) {
+	public Field() {
 		super();
 		root.getChildren().add(this);
-		String levelmappath = new String(path + "levelmap" + Integer.toString(selectedLevel) + ".txt");
+		String levelmappath = new String(
+				leveldataDir + File.separator + "levelmap" + Integer.toString(selectedLevel) + ".txt");
 		try (Scanner in = new Scanner(new File(levelmappath))) {
 			TILE_SIDE = Integer.parseInt(in.nextLine());
 			ImageView background = null;
 			try {
-				background = new ImageView(new Image(new FileInputStream(new File(resourcesAddress+File.separator+"img"+File.separator+"stones.jpg"))));
+				background = new ImageView(
+						new Image(new FileInputStream(new File(imgDir + File.separator + "stones.jpg"))));
 			} catch (FileNotFoundException e) {
 				System.err.println("Did not found field background");
 			}
-			background.setFitHeight(HEIGHT);
-			background.setFitWidth(WIDTH);
+			background.setFitHeight(FIELD_HEIGHT);
+			background.setFitWidth(FIELD_WIDTH);
 			root.getChildren().add(background);
-			TILES_AMOUNT_WIDTH = WIDTH / TILE_SIDE;
-			TILES_AMOUNT_HEIGHT = HEIGHT / TILE_SIDE;
+			TILES_AMOUNT_WIDTH = FIELD_WIDTH / TILE_SIDE;
+			TILES_AMOUNT_HEIGHT = FIELD_HEIGHT / TILE_SIDE;
 			tiles = new Cell[TILES_AMOUNT_WIDTH][TILES_AMOUNT_HEIGHT];
 			String[] strField = new String[TILES_AMOUNT_HEIGHT];
 			for (int i = 0; i < TILES_AMOUNT_HEIGHT; i++) {
@@ -88,31 +90,31 @@ public class Field extends StackPane {
 				}
 			}
 			field = this;
-			enemyStack = new ArrayDeque<>();
-			timeForDestroying = new ArrayDeque<>();
+			enemiesStack = new ArrayDeque<>();
+			enemiesOutcomeTime = new ArrayDeque<>();
 			int n = in.nextInt();
 			for (int i = 0; i < n; ++i) {
 				int type = in.nextInt();
 				if (type == 1)
-					enemyStack.addLast(new WeakEnemy(startCell.x, startCell.y));
+					enemiesStack.addLast(new WeakEnemy(startCell.x, startCell.y));
 				if (type == 2)
-					enemyStack.addLast(new FatEnemy(startCell.x, startCell.y));
+					enemiesStack.addLast(new FatEnemy(startCell.x, startCell.y));
 				if (type == 3)
-					enemyStack.addLast(new FastEnemy(startCell.x, startCell.y));
+					enemiesStack.addLast(new FastEnemy(startCell.x, startCell.y));
 				if (type == 4)
-					enemyStack.addLast(new HealEnemy(startCell.x, startCell.y));
+					enemiesStack.addLast(new HealEnemy(startCell.x, startCell.y));
 				if (type == 5)
-					enemyStack.addLast(new FlyingWeakEnemy(startCell.x, startCell.y));
+					enemiesStack.addLast(new FlyingWeakEnemy(startCell.x, startCell.y));
 				if (type == 6)
-					enemyStack.addLast(new FlyingFastEnemy(startCell.x, startCell.y));
+					enemiesStack.addLast(new FlyingFastEnemy(startCell.x, startCell.y));
 				if (type == 7)
-					enemyStack.addLast(new FlyingFatEnemy(startCell.x, startCell.y));
+					enemiesStack.addLast(new FlyingFatEnemy(startCell.x, startCell.y));
 				if (type == 100)
-					enemyStack.addLast(new Boss(startCell.x, startCell.y));
-				timeForDestroying.addLast(in.nextLong() * 1_000_000L);
+					enemiesStack.addLast(new Boss(startCell.x, startCell.y));
+				enemiesOutcomeTime.addLast(in.nextLong() * 1_000_000L);
 			}
 		} catch (FileNotFoundException e) {
-			System.err.println("File not found: "+levelmappath);
+			System.err.println("File not found: " + levelmappath);
 		}
 
 	}

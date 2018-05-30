@@ -36,12 +36,12 @@ public class HealEnemy extends Enemy {
 	@Override
 	public void specialMechanic(long now) {
 		showRange.setVisible(true);
-		showRange.relocate(x - healRadius, y - healRadius);
+		showRange.relocate(getX() - healRadius, getY() - healRadius);
 		if (now - lastheal > cooldown) {
 			lastheal = now;
 			for (Enemy enemy : enemies) {
-				if (enemy.alive() && dist(x, y, enemy.x, enemy.y) <= healRadius) {
-					enemy.hitpoints = Math.min(enemy.maximumHitpoints, enemy.hitpoints + healAmount);
+				if (enemy.alive() && dist(getX(), getY(), enemy.getX(), enemy.getY()) <= healRadius) {
+					enemy.setHitpoints(Math.min(enemy.maximumHitpoints, enemy.getHitpoints() + healAmount));
 				}
 			}
 		}

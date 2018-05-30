@@ -18,15 +18,15 @@ public class Bullet extends MovableObject {
 
 	@Override
 	public void move() {
-		if (type.hit(x, y) && actual) {
+		if (type.hit(getX(), getY()) && actual) {
 			this.setVisible(false);
 			bullets.remove(this);
 			root.getChildren().remove(this);
 			actual = false;
 		} else {
-			x += speedX;
-			y += speedY;
-			super.relocate(x, y);
+			setX(getX() + getSpeedX());
+			setY(getY() + getSpeedY());
+			super.render();
 		}
 
 	}

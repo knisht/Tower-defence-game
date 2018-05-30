@@ -19,9 +19,9 @@ public class StateMenu extends StackPane {
 		super();
 		root.getChildren().add(this);
 		x = 0;
-		y = HEIGHT;
+		y = FIELD_HEIGHT;
 		wid = WINDOW_WIDTH;
-		hei = WINDOW_HEIGHT - HEIGHT;
+		hei = WINDOW_HEIGHT - FIELD_HEIGHT;
 		Rectangle full = new Rectangle(x, y, wid, hei);
 		full.setFill(Color.LIGHTBLUE);
 		getChildren().add(full);

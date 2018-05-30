@@ -28,7 +28,7 @@ public class Boss extends Enemy {
 	public void specialMechanic(long now) {
 		if (now - lastheal > cooldown) {
 			lastheal = now;
-			hitpoints += healAmount;
+			setHitpoints(getHitpoints() + healAmount);
 		}
 	}
 

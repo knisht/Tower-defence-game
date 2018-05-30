@@ -9,15 +9,14 @@ import static core.World.*;
 
 public class Tower extends GameObject implements EventHandler<MouseEvent> {
 
-	double damage;
-	double range;
-	public long cost;
-	public long cooldown;
-	public long lastShoot;
-	public BulletType bullet;
-	boolean active;
-	public TowerCell cell;
-	public String damageType;
+	private final double range;
+	private final long cost;
+	private final long cooldown;
+	private BulletType bullet;
+	private final String damageType;
+	private long lastShoot;
+	public boolean active;
+	private TowerCell cell;
 
 	public Tower(String src, double x, double y, Color color, double range, long cost, long cooldown, BulletType bullet,
 			String damageType) {
@@ -39,8 +38,8 @@ public class Tower extends GameObject implements EventHandler<MouseEvent> {
 		Enemy nearest = null;
 		double minrst = Double.POSITIVE_INFINITY;
 		for (Enemy enemy : enemies) {
-			if (enemy.alive() && possibleToShoot(damageType, enemy.flying)) {
-				double rst = dist(enemy.x, enemy.y, this.x, this.y);
+			if (enemy.alive() && possibleToShoot(damageType, enemy.getFlying())) {
+				double rst = dist(enemy.getX(), enemy.getY(), this.getX(), this.getY());
 				if (rst < minrst) {
 					nearest = enemy;
 					minrst = rst;
@@ -50,8 +49,8 @@ public class Tower extends GameObject implements EventHandler<MouseEvent> {
 		if (minrst < range) {
 			if (nearest.alive()) {
 				lastShoot = nowtime;
-				return new Bullet(x + TILE_SIDE / 2 - base.getRadius(), y + TILE_SIDE / 2 - base.getRadius(),
-						nearest.x + TILE_SIDE / 2, nearest.y + TILE_SIDE / 2, bullet);
+				return new Bullet(getX() + TILE_SIDE / 2 - base.getRadius(), getY() + TILE_SIDE / 2 - base.getRadius(),
+						nearest.getX() + TILE_SIDE / 2, nearest.getY() + TILE_SIDE / 2, bullet);
 			}
 		}
 		return null;
@@ -59,7 +58,6 @@ public class Tower extends GameObject implements EventHandler<MouseEvent> {
 
 	public void destroy() {
 		active = false;
-		relocate(10000, 10000);
 		setVisible(false);
 		root.getChildren().remove(this);
 		towers.remove(this);
@@ -76,4 +74,53 @@ public class Tower extends GameObject implements EventHandler<MouseEvent> {
 		return (type.equals(flying));
 	}
 
+	public double getRange() {
+		return range;
+	}
+
+	public long getCost() {
+		return cost;
+	}
+
+	public long getCooldown() {
+		return cooldown;
+	}
+
+	public long getLastShoot() {
+		return lastShoot;
+	}
+
+	public void setLastShoot(long lastShoot) {
+		this.lastShoot = lastShoot;
+	}
+
+	public BulletType getBullet() {
+		return bullet;
+	}
+
+	public void setBullet(BulletType bullet) {
+		this.bullet = bullet;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public TowerCell getCell() {
+		return cell;
+	}
+
+	public void setCell(TowerCell cell) {
+		this.cell = cell;
+	}
+
+	public String getDamageType() {
+		return damageType;
+	}
+
+	
 }

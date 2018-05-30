@@ -14,7 +14,7 @@ import javafx.scene.image.Image;
 
 public class Maps {
 	public static Map<String, Image> images;
-	private static String imageDir = World.resourcesAddress+File.separator+"img";
+	private static String imageDir = World.imgDir;
 	static File log = new File("log.txt");
 	static public OutputStreamWriter errs;
 	static public FileOutputStream errsStream;

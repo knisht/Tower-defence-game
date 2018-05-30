@@ -50,16 +50,16 @@ public class TowerCell extends BuildableCell<Tower> implements EventHandler<Mous
 
 	@Override
 	public void build(Tower target) {
-		if (gold < target.cost)
+		if (goldAmount < target.getCost())
 			return;
-		gold -= target.cost;
+		goldAmount -= target.getCost();
 		if (tower != null)
 			tower.destroy();
-		target.x = x;
-		target.y = y;
+		target.setX(x);
+		target.setY(y);
 		towers.add(target);
 		tower = target;
-		tower.cell = this;
+		tower.setCell(this);
 		root.getChildren().add(target);
 	}
 }

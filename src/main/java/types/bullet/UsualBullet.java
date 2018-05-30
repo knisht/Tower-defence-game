@@ -9,19 +9,18 @@ import core.Enemy;
 import core.Tower;
 import javafx.scene.paint.Color;
 
-public class SplashBullet extends BulletType {
+public class UsualBullet extends BulletType {
 
-	double range = TILE_SIDE * 2;
-
-	public SplashBullet() {
-		damage = 100;
-		imageSource = "";
-		color = Color.BLACK;
-		speed = 2.5;
-		radius = 4;
-		damageType = "G";
+	public UsualBullet(double damage, String imageSource, Color color, double speed, double radius, String damageType) {
+		super.damage = damage;
+		super.imageSource = imageSource;
+		super.color = color;
+		super.speed = speed;
+		super.radius = radius;
+		super.damageType = damageType;
 	}
 
+	@Override
 	public boolean hit(double x, double y) {
 		boolean hit = false;
 		for (Enemy enemy : enemies) {
@@ -34,7 +33,7 @@ public class SplashBullet extends BulletType {
 		if (hit) {
 			for (Enemy enemy : enemies) {
 				if (enemy.alive() && Tower.possibleToShoot(damageType, enemy.getFlying())
-						&& dist(enemy.getX() + TILE_SIDE / 2, enemy.getY() + TILE_SIDE / 2, x, y) <= range) {
+						&& dist(enemy.getX() + TILE_SIDE / 2, enemy.getY() + TILE_SIDE / 2, x, y) <= enemy.getBase().getRadius()) {
 					enemy.receiveDamage(damage);
 				}
 			}
@@ -43,4 +42,5 @@ public class SplashBullet extends BulletType {
 			return false;
 		}
 	}
+
 }

@@ -6,17 +6,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public abstract class GameObject extends StackPane {
-	public double x;
-	public double y;
-	public Circle base;
-	public ImageView img;
+	protected Circle base;
+	protected ImageView img;
 	public boolean simplified;
 
 	public GameObject(String src, double x, double y, double radius, Color color) {
 		super();
 		base = new Circle(x, y, radius, color);
-		this.x = x;
-		this.y = y;
 		if (src != "") {
 			img = new ImageView(Maps.getImage(src));
 			img.setFitWidth(radius * 2);
@@ -34,6 +30,25 @@ public abstract class GameObject extends StackPane {
 	}
 
 	public void render() {
-		super.relocate(x, y);
+		super.relocate(getX(), getY());
+	}
+	
+	public double getX() {
+		return base.getCenterX();
+	}
+	
+	public void setX(double x) {
+		base.setCenterX(x);
+	}
+	
+	public double getY() {
+		return base.getCenterY();
+	}
+	
+	public void setY(double y) {
+		base.setCenterY(y);
+	}
+	public Circle getBase() {
+		return base;
 	}
 }

@@ -20,8 +20,8 @@ public class Cell extends StackPane {
 
 	public Cell(String src, int wIndex, int hIndex, Color color, boolean available) {
 		super();
-		x = TILE_SIDE * wIndex + ((WIDTH - (TILE_SIDE * TILES_AMOUNT_WIDTH)) / 2);
-		y = TILE_SIDE * hIndex + ((HEIGHT - (TILE_SIDE * TILES_AMOUNT_HEIGHT)) / 2);
+		x = TILE_SIDE * wIndex + ((FIELD_WIDTH - (TILE_SIDE * TILES_AMOUNT_WIDTH)) / 2);
+		y = TILE_SIDE * hIndex + ((FIELD_HEIGHT - (TILE_SIDE * TILES_AMOUNT_HEIGHT)) / 2);
 		this.wIndex = wIndex;
 		this.hIndex = hIndex;
 		base = new Rectangle(x, y, TILE_SIDE, TILE_SIDE);

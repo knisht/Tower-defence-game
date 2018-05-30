@@ -14,11 +14,11 @@ public abstract class Enemy extends MovableObject {
 	private int curpx;
 	private int curpy;
 	private double absoluteSpeed;
-	public double hitpoints;
-	public double maximumHitpoints;
+	private double hitpoints;
+	public final double maximumHitpoints;
 	private RoadCell currentCell;
 	private Rectangle hitpointBar;
-	public String flying;
+	public final String flying;
 
 	public Enemy(String src, double x, double y, Color color, int hitpoints, double absoluteSpeed,
 			String flying) {
@@ -45,12 +45,13 @@ public abstract class Enemy extends MovableObject {
 			return;
 		hitpointBar.setVisible(true);
 		specialMechanic(now);
-		if (x >= field.tiles[curpx][curpy].x && x + 2 * base.getRadius() <= field.tiles[curpx][curpy].x + TILE_SIDE
-				&& y >= field.tiles[curpx][curpy].y
-				&& y + 2 * base.getRadius() <= field.tiles[curpx][curpy].y + TILE_SIDE) {
+		if (getX() >= field.tiles[curpx][curpy].x 
+				&& getX() + 2 * base.getRadius() <= field.tiles[curpx][curpy].x + TILE_SIDE
+				&& getY() >= field.tiles[curpx][curpy].y
+				&& getY() + 2 * base.getRadius() <= field.tiles[curpx][curpy].y + TILE_SIDE) {
 
 			if (field.tiles[curpx][curpy] instanceof FinishCell) {
-				lose = true;
+				gameLostState = true;
 				return;
 			}
 
@@ -58,42 +59,42 @@ public abstract class Enemy extends MovableObject {
 				oldpx = curpx;
 				oldpy = curpy;
 				curpx--;
-				speedX = -absoluteSpeed;
-				speedY = 0;
+				setSpeedX(-absoluteSpeed);
+				setSpeedY(0);
 			} else if ((curpx < TILES_AMOUNT_WIDTH - 1) && !(curpx + 1 == oldpx && curpy == oldpy)
 					&& acceptable(field.tiles[curpx + 1][curpy])) {
 				oldpx = curpx;
 				oldpy = curpy;
 				curpx++;
-				speedX = absoluteSpeed;
-				speedY = 0;
+				setSpeedX(absoluteSpeed);
+				setSpeedY(0);
 			} else if ((curpy > 0) && !(curpx == oldpx && curpy - 1 == oldpy)
 					&& acceptable(field.tiles[curpx][curpy - 1])) {
 				oldpx = curpx;
 				oldpy = curpy;
 				curpy--;
-				speedX = 0;
-				speedY = -absoluteSpeed;
+				setSpeedX(0);
+				setSpeedY(-absoluteSpeed);
 			} else if ((curpy < TILES_AMOUNT_HEIGHT - 1) && !(curpx == oldpx && curpy + 1 == oldpy)
 					&& acceptable(field.tiles[curpx][curpy + 1])) {
 				oldpx = curpx;
 				oldpy = curpy;
 				curpy++;
-				speedX = 0;
-				speedY = +absoluteSpeed;
+				setSpeedX (0);
+				setSpeedY(absoluteSpeed);
 			}
 
 		}
 		currentCell = (RoadCell) field.tiles[curpx][curpy];
-		this.x += speedX * currentCell.speedRate;
-		this.y += speedY * currentCell.speedRate;
-		super.relocate(x, y);
+		this.setX(getX() + getSpeedX() * currentCell.speedRate);
+		this.setY(getY() + getSpeedY() * currentCell.speedRate) ;
+		super.render();
 		hitpointBar.setWidth(hitpoints / maximumHitpoints * (TILE_SIDE - 2));
-		hitpointBar.relocate(x, y - 5);
+		hitpointBar.relocate(getX(), getY() - 5);
 	}
 
 	public void render() {
-		super.relocate(x - TILE_SIDE / 2 + 1, y - TILE_SIDE / 2 + 1);
+		super.relocate(getX() - TILE_SIDE / 2 + 1, getY() - TILE_SIDE / 2 + 1);
 	}
 
 	public boolean acceptable(Cell r) {
@@ -104,7 +105,7 @@ public abstract class Enemy extends MovableObject {
 		return hitpoints > 0;
 	}
 
-	public void die() {
+	public void tryToDie() {
 		if (hitpoints <= 0) {
 			setVisible(false);
 			root.getChildren().remove(this);
@@ -121,4 +122,20 @@ public abstract class Enemy extends MovableObject {
 	public abstract void specialMechanic(long now);
 
 	public abstract void destroyMechanics();
+
+
+	public double getHitpoints() {
+		return hitpoints;
+	}
+
+	public void setHitpoints(double hitpoints) {
+		this.hitpoints = hitpoints;
+	}
+
+
+	public String getFlying() {
+		return flying;
+	}
+
+
 }

@@ -25,11 +25,11 @@ public class TimeCell extends InformationCell {
 
 	@Override
 	public void refresh() {
-		fulltime.setText("Time passed: " + Long.toString((time - start) / 60_000_000_000L) + "m, "
-				+ Long.toString(((time - start) / 1_000_000_000L) % 60) + "s, "
-				+ Long.toString(((time - start) / 1_000_000L) % 1000) + "ms");
+		fulltime.setText("Time passed: " + Long.toString((actionTime - startMoment) / 60_000_000_000L) + "m, "
+				+ Long.toString(((actionTime - startMoment) / 1_000_000_000L) % 60) + "s, "
+				+ Long.toString(((actionTime - startMoment) / 1_000_000L) % 1000) + "ms");
 		beforeGold.setText(
-				"Next income in " + Long.toString((goldInterval - (time - start) % goldInterval) / 1_000_000_000) + "."
-						+ Long.toString(((goldInterval - (time - start) % goldInterval) / 1_000_000) % 1000) + "s");
+				"Next income in " + Long.toString((goldInterval - (actionTime - startMoment) % goldInterval) / 1_000_000_000) + "."
+						+ Long.toString(((goldInterval - (actionTime - startMoment) % goldInterval) / 1_000_000) % 1000) + "s");
 	}
 }

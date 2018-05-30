@@ -33,12 +33,12 @@ public class TableScreen {
 		StackPane layout = new StackPane(rect, box);
 		layout.setAlignment(Pos.CENTER);
 		mainStage.setScene(scene);
-		exitButton.setOnMouseClicked(event -> closeWindows = true);
+		exitButton.setOnMouseClicked(event -> windowsClosed = true);
 		continueButton.setOnMouseClicked(event -> {
-			startLevel = true;
+			levelStarted = true;
 			selectedLevel++;
 		});
-		replayButton.setOnMouseClicked(event -> startLevel = true);
+		replayButton.setOnMouseClicked(event -> levelStarted = true);
 		root.getChildren().add(layout);
 
 	}
@@ -57,8 +57,8 @@ public class TableScreen {
 		StackPane layout = new StackPane(rect, box);
 		layout.setAlignment(Pos.CENTER);
 		mainStage.setScene(scene);
-		exitButton.setOnMouseClicked(event -> closeWindows = true);
-		replayButton.setOnMouseClicked(event -> startLevel = true);
+		exitButton.setOnMouseClicked(event -> windowsClosed = true);
+		replayButton.setOnMouseClicked(event -> levelStarted = true);
 		root.getChildren().add(layout);
 	}
 
