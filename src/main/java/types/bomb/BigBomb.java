@@ -2,6 +2,7 @@ package types.bomb;
 
 import core.Bomb;
 import core.Maps;
+import core.primitive.Point;
 import javafx.scene.paint.Color;
 import static core.World.*;
 
@@ -18,8 +19,8 @@ public class BigBomb extends Bomb {
 		Maps.storeImage(src);
 	}
 
-	public BigBomb(double x, double y) {
-		super(src, x, y, color, damage, splashArea, cost);
+	public BigBomb(Point point) {
+		super(src, point, color, damage, splashArea, cost);
 	}
 
 }

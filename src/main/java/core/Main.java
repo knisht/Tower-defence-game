@@ -2,6 +2,8 @@ package core;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.LinkedHashSet;
 
 import javafx.animation.AnimationTimer;
@@ -43,6 +45,7 @@ public class Main extends Application {
 		actionStartedState = true;
 		actionHappensState = false;
 		windowsClosed = false;
+		
 
 		AnimationTimer startScreen = new AnimationTimer() {
 
@@ -132,7 +135,7 @@ public class Main extends Application {
 		}
 		for (Tower tower : towers) {
 			if (tower.active) {
-				Bullet bullet = tower.shoot(actionTime);
+				Bullet bullet = tower.shoot(Instant.now().minus(Duration.ofNanos(fullPauseTime)));
 				if (bullet != null) {
 					bullets.add(bullet);
 				}
@@ -150,6 +153,7 @@ public class Main extends Application {
 			if (enemy.alive())
 				++aliveAmount;
 			enemy.move(now);
+			enemy.render();
 		}
 		if (aliveAmount == 0 && enemiesStack.isEmpty()) {
 			gameWonState = true;

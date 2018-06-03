@@ -2,6 +2,7 @@ package ui;
 
 import core.GameObject;
 import core.Maps;
+import core.primitive.Point;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -32,6 +33,6 @@ public abstract class BuildDescription<T extends GameObject> extends StackPane {
 		getChildren().addAll(rect, info);
 	}
 	
-	public abstract T forge(double x, double y);
+	public abstract T forge(Point point);
 
 }

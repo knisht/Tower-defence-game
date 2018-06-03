@@ -1,6 +1,9 @@
 package ui.description;
 
+import core.Bomb;
 import core.Tower;
+import core.primitive.Point;
+import types.bomb.MiddleBomb;
 import types.tower.SplashTower;
 import ui.BuildDescription;
 
@@ -11,7 +14,7 @@ public class SplashTowerDescription extends BuildDescription<Tower> {
 	}
 
 	@Override
-	public SplashTower forge(double x, double y) {
-		return new SplashTower(x, y);
+	public Tower forge(Point point) {
+		return new SplashTower(point);
 	}
 }

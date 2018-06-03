@@ -1,12 +1,12 @@
 package types.bullet;
 
 import static core.World.TILE_SIDE;
-import static core.World.dist;
 import static core.World.enemies;
 
 import core.BulletType;
 import core.Enemy;
 import core.Tower;
+import core.primitive.Point;
 import javafx.scene.paint.Color;
 
 public class UsualBullet extends BulletType {
@@ -21,11 +21,11 @@ public class UsualBullet extends BulletType {
 	}
 
 	@Override
-	public boolean hit(double x, double y) {
+	public boolean hit(Point point) {
 		boolean hit = false;
 		for (Enemy enemy : enemies) {
 			if (enemy.alive() && Tower.possibleToShoot(damageType, enemy.getFlying())
-					&& dist(enemy.getX() + TILE_SIDE / 2, enemy.getY() + TILE_SIDE / 2, x, y) <= enemy.getBase().getRadius()) {
+					&& enemy.getPoint().distance(point) <= enemy.getBase().getRadius()) {
 				hit = true;
 				break;
 			}
@@ -33,7 +33,7 @@ public class UsualBullet extends BulletType {
 		if (hit) {
 			for (Enemy enemy : enemies) {
 				if (enemy.alive() && Tower.possibleToShoot(damageType, enemy.getFlying())
-						&& dist(enemy.getX() + TILE_SIDE / 2, enemy.getY() + TILE_SIDE / 2, x, y) <= enemy.getBase().getRadius()) {
+						&& enemy.getPoint().distance(point) <= enemy.getBase().getRadius()) {
 					enemy.receiveDamage(damage);
 				}
 			}

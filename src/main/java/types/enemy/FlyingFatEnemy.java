@@ -2,6 +2,7 @@ package types.enemy;
 
 import core.Enemy;
 import core.Maps;
+import core.primitive.Point;
 import javafx.scene.paint.Color;
 import static core.World.*;
 
@@ -13,8 +14,8 @@ public class FlyingFatEnemy extends Enemy {
 		Maps.storeImage(src);
 	}
 
-	public FlyingFatEnemy(double x, double y) {
-		super(src, x, y, Color.LIME, 400, ((double) TILE_SIDE) / 50, "F");
+	public FlyingFatEnemy(Point point) {
+		super(src, point, Color.LIME, 400, ((double) TILE_SIDE) / 50, "F");
 	}
 
 	@Override

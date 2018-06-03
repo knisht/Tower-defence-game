@@ -1,6 +1,7 @@
 package ui.description;
 
 import core.Bomb;
+import core.primitive.Point;
 import types.bomb.BigBomb;
 import ui.BuildDescription;
 
@@ -12,8 +13,8 @@ public class BigBombDescription extends BuildDescription<Bomb> {
 
 
 	@Override
-	public BigBomb forge(double x, double y) {
-		return new BigBomb(x, y);
+	public Bomb forge(Point point) {
+		return new BigBomb(point);
 	}
 
 }

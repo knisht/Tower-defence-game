@@ -3,6 +3,7 @@ package types.miner;
 
 import core.Maps;
 import core.Miner;
+import core.primitive.Point;
 import javafx.scene.paint.Color;
 
 public class GreatMiner extends Miner {
@@ -16,8 +17,8 @@ public class GreatMiner extends Miner {
 		Maps.storeImage(src);
 	}
 
-	public GreatMiner(double x, double y) {
-		super(src, x, y, color, income, cost);
+	public GreatMiner(Point point) {
+		super(src, point, color, income, cost);
 	}
 
 }

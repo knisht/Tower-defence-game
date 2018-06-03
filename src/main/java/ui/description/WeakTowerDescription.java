@@ -1,6 +1,9 @@
 package ui.description;
 
+import core.Bomb;
 import core.Tower;
+import core.primitive.Point;
+import types.bomb.MiddleBomb;
 import types.tower.WeakTower;
 import ui.BuildDescription;
 
@@ -11,7 +14,7 @@ public class WeakTowerDescription extends BuildDescription<Tower> {
 	}
 
 	@Override
-	public WeakTower forge(double x, double y) {
-		return new WeakTower(x, y);
+	public Tower forge(Point point) {
+		return new WeakTower(point);
 	}
 }

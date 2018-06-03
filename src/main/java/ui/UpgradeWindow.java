@@ -51,7 +51,7 @@ public class UpgradeWindow<T extends GameObject> extends PopUpWindow {
 			double y = event.getSceneY();
 			for (int i = 0; i < amountOfAlternatives; i++) {
 				if (y < (height * (i + 1))) {
-					caller.build(options.get(i).forge(caller.getX(), caller.getY()));
+					caller.build(options.get(i).forge(caller.getPoint()));
 					break;
 				}
 			}

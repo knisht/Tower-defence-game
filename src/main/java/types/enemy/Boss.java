@@ -2,6 +2,7 @@ package types.enemy;
 
 import core.Enemy;
 import core.Maps;
+import core.primitive.Point;
 import javafx.scene.paint.Color;
 import static core.World.*;
 
@@ -17,8 +18,8 @@ public class Boss extends Enemy {
 		Maps.storeImage(src);
 	}
 
-	public Boss(double x, double y) {
-		super(src, x, y, Color.BLACK, 1000, ((double) TILE_SIDE) / 60, "B");
+	public Boss(Point point) {
+		super(src, point, Color.BLACK, 1000, ((double) TILE_SIDE) / 60, "B");
 		healAmount = 100;
 		cooldown = 1_000_000_000L;
 		lastheal = 0;

@@ -61,8 +61,7 @@ public class MinerCell extends BuildableCell<Miner> implements EventHandler<Mous
 		goldIncome += target.income;
 		if (miner != null)
 			miner.destroy();
-		target.setX(x);
-		target.setY(y);
+		target.setPoint(getPoint());
 		miners.add(target);
 		miner = target;
 		miner.cell = this;

@@ -1,6 +1,7 @@
 package ui.description;
 
 import core.Miner;
+import core.primitive.Point;
 import types.miner.AdvancedMiner;
 import ui.BuildDescription;
 
@@ -12,8 +13,8 @@ public class AdvancedMinerDescription extends BuildDescription<Miner> {
 
 
 	@Override
-	public Miner forge(double x, double y) {
-		return new AdvancedMiner(x, y);
+	public Miner forge(Point point) {
+		return new AdvancedMiner(point);
 	}
 
 

@@ -7,39 +7,42 @@ import types.cell.TowerCell;
 
 import static core.World.*;
 
+import java.time.Duration;
+import java.time.Instant;
+
+import core.primitive.Point;
+
 public class Tower extends GameObject implements EventHandler<MouseEvent> {
 
 	private final double range;
 	private final long cost;
-	private final long cooldown;
-	private BulletType bullet;
-	private final String damageType;
-	private long lastShoot;
+	private final Duration cooldown;
+	private final BulletType bullet;
+	private Instant lastShoot;
 	public boolean active;
 	private TowerCell cell;
 
-	public Tower(String src, double x, double y, Color color, double range, long cost, long cooldown, BulletType bullet,
-			String damageType) {
-		super(src, x, y, TILE_SIDE / 2 - 3, color);
+	public Tower(String src, Point point, Color color, double range, long cost, Duration cooldown, BulletType bullet) {
+		super(src, point, TILE_SIDE / 2 - 3, color);
 		this.range = range;
 		this.cost = cost;
 		this.cooldown = cooldown;
 		this.bullet = bullet;
-		this.damageType = damageType;
-		lastShoot = 0;
-		super.relocate(x + TILE_SIDE / 2 - base.getRadius(), y + TILE_SIDE / 2 - base.getRadius());
+		lastShoot = Instant.now();
+		super.relocate(point.getX() + TILE_SIDE / 2 - base.getRadius(),
+				point.getY() + TILE_SIDE / 2 - base.getRadius());
 		active = true;
 		super.setOnMouseClicked(this);
 	}
 
-	public Bullet shoot(long nowtime) {
-		if (!active || nowtime - lastShoot < cooldown)
+	public Bullet shoot(Instant nowtime) {
+		if (!active || Duration.between(lastShoot, nowtime).toNanos() < cooldown.toNanos())
 			return null;
 		Enemy nearest = null;
 		double minrst = Double.POSITIVE_INFINITY;
 		for (Enemy enemy : enemies) {
-			if (enemy.alive() && possibleToShoot(damageType, enemy.getFlying())) {
-				double rst = dist(enemy.getX(), enemy.getY(), this.getX(), this.getY());
+			if (enemy.alive() && possibleToShoot(bullet.damageType, enemy.getFlying())) {
+				double rst = this.getPoint().distance(enemy.getPoint());
 				if (rst < minrst) {
 					nearest = enemy;
 					minrst = rst;
@@ -49,8 +52,7 @@ public class Tower extends GameObject implements EventHandler<MouseEvent> {
 		if (minrst < range) {
 			if (nearest.alive()) {
 				lastShoot = nowtime;
-				return new Bullet(getX() + TILE_SIDE / 2 - base.getRadius(), getY() + TILE_SIDE / 2 - base.getRadius(),
-						nearest.getX() + TILE_SIDE / 2, nearest.getY() + TILE_SIDE / 2, bullet);
+				return new Bullet(getPoint(), nearest.getPoint(), bullet);
 			}
 		}
 		return null;
@@ -82,24 +84,12 @@ public class Tower extends GameObject implements EventHandler<MouseEvent> {
 		return cost;
 	}
 
-	public long getCooldown() {
+	public Duration getCooldown() {
 		return cooldown;
-	}
-
-	public long getLastShoot() {
-		return lastShoot;
-	}
-
-	public void setLastShoot(long lastShoot) {
-		this.lastShoot = lastShoot;
 	}
 
 	public BulletType getBullet() {
 		return bullet;
-	}
-
-	public void setBullet(BulletType bullet) {
-		this.bullet = bullet;
 	}
 
 	public boolean isActive() {
@@ -117,10 +107,4 @@ public class Tower extends GameObject implements EventHandler<MouseEvent> {
 	public void setCell(TowerCell cell) {
 		this.cell = cell;
 	}
-
-	public String getDamageType() {
-		return damageType;
-	}
-
-	
 }

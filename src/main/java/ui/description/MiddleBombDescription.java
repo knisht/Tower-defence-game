@@ -1,7 +1,10 @@
 package ui.description;
 
 import core.Bomb;
+import core.Miner;
+import core.primitive.Point;
 import types.bomb.MiddleBomb;
+import types.miner.AdvancedMiner;
 import ui.BuildDescription;
 
 public class MiddleBombDescription extends BuildDescription<Bomb> {
@@ -12,8 +15,8 @@ public class MiddleBombDescription extends BuildDescription<Bomb> {
 
 
 	@Override
-	public MiddleBomb forge(double x, double y) {
-		return new MiddleBomb(x, y);
+	public Bomb forge(Point point) {
+		return new MiddleBomb(point);
 	}
 
 }

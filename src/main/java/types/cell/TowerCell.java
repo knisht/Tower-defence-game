@@ -55,8 +55,7 @@ public class TowerCell extends BuildableCell<Tower> implements EventHandler<Mous
 		goldAmount -= target.getCost();
 		if (tower != null)
 			tower.destroy();
-		target.setX(x);
-		target.setY(y);
+		target.setPoint(getPoint());
 		towers.add(target);
 		tower = target;
 		tower.setCell(this);

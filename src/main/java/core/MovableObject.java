@@ -1,38 +1,34 @@
 package core;
 
+import core.primitive.Point;
+import core.primitive.Speed;
 import javafx.scene.paint.Color;
 
 public abstract class MovableObject extends GameObject {
 
-	private double speedX;
-	private double speedY;
+	private Speed speed;
 
-	public MovableObject(String src, double x, double y, double radius, Color color, double speedX, double speedY) {
-		super(src, x, y, radius, color);
-		this.speedX = speedX;
-		this.speedY = speedY;
+	public MovableObject(String src, Point point, double radius, Color color, Speed speed) {
+		super(src, point, radius, color);
+		this.speed = speed;
 	}
 
 	void move() {
-		setX(getX() + speedX);
-		setY(getY() + speedY);
+		setPoint(getPoint().add(speed));
 		super.render();
 	}
 
-	public double getSpeedX() {
-		return speedX;
+	void move(Speed speed) {
+		setPoint(getPoint().add(speed));
+		super.render();
 	}
 
-	public void setSpeedX(double speedX) {
-		this.speedX = speedX;
+	public Speed getSpeed() {
+		return speed;
 	}
 
-	public double getSpeedY() {
-		return speedY;
-	}
-
-	public void setSpeedY(double speedY) {
-		this.speedY = speedY;
+	public void setSpeed(Speed speed) {
+		this.speed = speed;
 	}
 
 }

@@ -28,6 +28,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayDeque;
 import java.util.Scanner;
 
+import core.primitive.Point;
+
 public class Field extends StackPane {
 	public Cell[][] tiles;
 	public SpawnCell startCell;
@@ -93,24 +95,25 @@ public class Field extends StackPane {
 			enemiesStack = new ArrayDeque<>();
 			enemiesOutcomeTime = new ArrayDeque<>();
 			int n = in.nextInt();
+			Point start = startCell.getCenterPoint();
 			for (int i = 0; i < n; ++i) {
 				int type = in.nextInt();
 				if (type == 1)
-					enemiesStack.addLast(new WeakEnemy(startCell.x, startCell.y));
+					enemiesStack.addLast(new WeakEnemy(start));
 				if (type == 2)
-					enemiesStack.addLast(new FatEnemy(startCell.x, startCell.y));
+					enemiesStack.addLast(new FatEnemy(start));
 				if (type == 3)
-					enemiesStack.addLast(new FastEnemy(startCell.x, startCell.y));
+					enemiesStack.addLast(new FastEnemy(start));
 				if (type == 4)
-					enemiesStack.addLast(new HealEnemy(startCell.x, startCell.y));
+					enemiesStack.addLast(new HealEnemy(start));
 				if (type == 5)
-					enemiesStack.addLast(new FlyingWeakEnemy(startCell.x, startCell.y));
+					enemiesStack.addLast(new FlyingWeakEnemy(start));
 				if (type == 6)
-					enemiesStack.addLast(new FlyingFastEnemy(startCell.x, startCell.y));
+					enemiesStack.addLast(new FlyingFastEnemy(start));
 				if (type == 7)
-					enemiesStack.addLast(new FlyingFatEnemy(startCell.x, startCell.y));
+					enemiesStack.addLast(new FlyingFatEnemy(start));
 				if (type == 100)
-					enemiesStack.addLast(new Boss(startCell.x, startCell.y));
+					enemiesStack.addLast(new Boss(start));
 				enemiesOutcomeTime.addLast(in.nextLong() * 1_000_000L);
 			}
 		} catch (FileNotFoundException e) {

@@ -1,5 +1,6 @@
 package core;
 
+import core.primitive.Point;
 import javafx.scene.paint.Color;
 
 public abstract class BulletType {
@@ -11,5 +12,5 @@ public abstract class BulletType {
 	public String damageType;
 	public String src = "";
 
-	public abstract boolean hit(double x, double y);
+	public abstract boolean hit(Point point);
 }

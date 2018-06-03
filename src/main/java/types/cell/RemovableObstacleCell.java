@@ -43,8 +43,8 @@ public class RemovableObstacleCell extends Cell implements EventHandler<MouseEve
 			return;
 		goldAmount-=cost;
 		root.getChildren().remove(this);
-		TowerCell newCell = new TowerCell(wIndex, hIndex);
-		field.tiles[wIndex][hIndex] = newCell;
+		TowerCell newCell = new TowerCell(getwIndex(), gethIndex());
+		field.tiles[getwIndex()][gethIndex()] = newCell;
 		root.getChildren().add(newCell);
 	}
 

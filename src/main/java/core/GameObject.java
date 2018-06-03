@@ -1,5 +1,6 @@
 package core;
 
+import core.primitive.Point;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -10,9 +11,9 @@ public abstract class GameObject extends StackPane {
 	protected ImageView img;
 	public boolean simplified;
 
-	public GameObject(String src, double x, double y, double radius, Color color) {
+	public GameObject(String src, Point point, double radius, Color color) {
 		super();
-		base = new Circle(x, y, radius, color);
+		base = new Circle(point.getX(), point.getY(), radius, color);
 		if (src != "") {
 			img = new ImageView(Maps.getImage(src));
 			img.setFitWidth(radius * 2);
@@ -30,24 +31,18 @@ public abstract class GameObject extends StackPane {
 	}
 
 	public void render() {
-		super.relocate(getX(), getY());
+		super.relocate(base.getCenterX(), base.getCenterY());
 	}
-	
-	public double getX() {
-		return base.getCenterX();
+
+	public Point getPoint() {
+		return new Point(base.getCenterX(), base.getCenterY());
 	}
-	
-	public void setX(double x) {
-		base.setCenterX(x);
+
+	public void setPoint(Point point) {
+		base.setCenterX(point.getX());
+		base.setCenterY(point.getY());
 	}
-	
-	public double getY() {
-		return base.getCenterY();
-	}
-	
-	public void setY(double y) {
-		base.setCenterY(y);
-	}
+
 	public Circle getBase() {
 		return base;
 	}

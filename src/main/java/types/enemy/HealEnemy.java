@@ -2,6 +2,7 @@ package types.enemy;
 
 import core.Enemy;
 import core.Maps;
+import core.primitive.Point;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -21,12 +22,12 @@ public class HealEnemy extends Enemy {
 		Maps.storeImage(src);
 	}
 
-	public HealEnemy(double x, double y) {
-		super(src, x, y, Color.ROSYBROWN, 100, ((double) TILE_SIDE) / 30, "B");
+	public HealEnemy(Point point) {
+		super(src, point, Color.ROSYBROWN, 100, ((double) TILE_SIDE) / 30, "B");
 		this.healRadius = TILE_SIDE * 3;
 		this.healAmount = 50;
 		this.cooldown = 1_500_000_000L;
-		showRange = new Circle(x, y, healRadius, Color.YELLOWGREEN);
+		showRange = new Circle(point.getX(), point.getX(), healRadius, Color.YELLOWGREEN);
 		showRange.setOpacity(0.5);
 		root.getChildren().add(showRange);
 		showRange.setVisible(false);
@@ -36,11 +37,11 @@ public class HealEnemy extends Enemy {
 	@Override
 	public void specialMechanic(long now) {
 		showRange.setVisible(true);
-		showRange.relocate(getX() - healRadius, getY() - healRadius);
+		showRange.relocate(getPoint().getX()- healRadius, getPoint().getY() - healRadius);
 		if (now - lastheal > cooldown) {
 			lastheal = now;
 			for (Enemy enemy : enemies) {
-				if (enemy.alive() && dist(getX(), getY(), enemy.getX(), enemy.getY()) <= healRadius) {
+				if (enemy.alive() && getPoint().distance(enemy.getPoint()) <= healRadius) {
 					enemy.setHitpoints(Math.min(enemy.maximumHitpoints, enemy.getHitpoints() + healAmount));
 				}
 			}

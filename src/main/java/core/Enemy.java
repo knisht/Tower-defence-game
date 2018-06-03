@@ -7,6 +7,9 @@ import types.cell.RoadCell;
 
 import static core.World.*;
 
+import core.primitive.Point;
+import core.primitive.Speed;
+
 public abstract class Enemy extends MovableObject {
 
 	private int oldpx;
@@ -20,21 +23,20 @@ public abstract class Enemy extends MovableObject {
 	private Rectangle hitpointBar;
 	public final String flying;
 
-	public Enemy(String src, double x, double y, Color color, int hitpoints, double absoluteSpeed,
-			String flying) {
-		super(src, x, y, TILE_SIDE / 2 - 3, color, 0, 0);
+	public Enemy(String src, Point point, Color color, int hitpoints, double absoluteSpeed, String flying) {
+		super(src, point, TILE_SIDE / 2 - 3, color, new Speed(0, 0));
 		this.hitpointBar = new Rectangle(TILE_SIDE - 2, 2);
 		hitpointBar.setFill(Color.RED);
-		curpx = field.startCell.wIndex;
+		curpx = field.startCell.getwIndex();
 		oldpx = curpx;
-		curpy = field.startCell.hIndex;
+		curpy = field.startCell.gethIndex();
 		oldpy = curpy;
 		this.currentCell = field.startCell;
 		this.hitpoints = hitpoints;
 		this.maximumHitpoints = hitpoints;
 		this.absoluteSpeed = absoluteSpeed;
 		this.flying = flying;
-		hitpointBar.relocate(x, y - 5);
+		hitpointBar.relocate(point.getX(), point.getY() - 5);
 		hitpointBar.setVisible(false);
 		root.getChildren().add(hitpointBar);
 		this.setMouseTransparent(true);
@@ -45,10 +47,10 @@ public abstract class Enemy extends MovableObject {
 			return;
 		hitpointBar.setVisible(true);
 		specialMechanic(now);
-		if (getX() >= field.tiles[curpx][curpy].x 
-				&& getX() + 2 * base.getRadius() <= field.tiles[curpx][curpy].x + TILE_SIDE
-				&& getY() >= field.tiles[curpx][curpy].y
-				&& getY() + 2 * base.getRadius() <= field.tiles[curpx][curpy].y + TILE_SIDE) {
+		if (getPoint().getX() - base.getRadius() >= field.tiles[curpx][curpy].getPoint().getX()
+				&& getPoint().getX() + base.getRadius() <= field.tiles[curpx][curpy].getPoint().getX() + TILE_SIDE
+				&& getPoint().getY() - base.getRadius() >= field.tiles[curpx][curpy].getPoint().getY()
+				&& getPoint().getY() + base.getRadius() <= field.tiles[curpx][curpy].getPoint().getY() + TILE_SIDE) {
 
 			if (field.tiles[curpx][curpy] instanceof FinishCell) {
 				gameLostState = true;
@@ -59,46 +61,40 @@ public abstract class Enemy extends MovableObject {
 				oldpx = curpx;
 				oldpy = curpy;
 				curpx--;
-				setSpeedX(-absoluteSpeed);
-				setSpeedY(0);
+				setSpeed(new Speed(-absoluteSpeed, 0));
 			} else if ((curpx < TILES_AMOUNT_WIDTH - 1) && !(curpx + 1 == oldpx && curpy == oldpy)
 					&& acceptable(field.tiles[curpx + 1][curpy])) {
 				oldpx = curpx;
 				oldpy = curpy;
 				curpx++;
-				setSpeedX(absoluteSpeed);
-				setSpeedY(0);
+				setSpeed(new Speed(absoluteSpeed, 0));
 			} else if ((curpy > 0) && !(curpx == oldpx && curpy - 1 == oldpy)
 					&& acceptable(field.tiles[curpx][curpy - 1])) {
 				oldpx = curpx;
 				oldpy = curpy;
 				curpy--;
-				setSpeedX(0);
-				setSpeedY(-absoluteSpeed);
+				setSpeed(new Speed(0, -absoluteSpeed));
 			} else if ((curpy < TILES_AMOUNT_HEIGHT - 1) && !(curpx == oldpx && curpy + 1 == oldpy)
 					&& acceptable(field.tiles[curpx][curpy + 1])) {
 				oldpx = curpx;
 				oldpy = curpy;
 				curpy++;
-				setSpeedX (0);
-				setSpeedY(absoluteSpeed);
+				setSpeed(new Speed(0, absoluteSpeed));
 			}
 
 		}
 		currentCell = (RoadCell) field.tiles[curpx][curpy];
-		this.setX(getX() + getSpeedX() * currentCell.speedRate);
-		this.setY(getY() + getSpeedY() * currentCell.speedRate) ;
-		super.render();
-		hitpointBar.setWidth(hitpoints / maximumHitpoints * (TILE_SIDE - 2));
-		hitpointBar.relocate(getX(), getY() - 5);
+		super.move(getSpeed().scale(currentCell.speedRate));
 	}
 
 	public void render() {
-		super.relocate(getX() - TILE_SIDE / 2 + 1, getY() - TILE_SIDE / 2 + 1);
+		super.relocate(getPoint().getX() - getBase().getRadius(), getPoint().getY() - getBase().getRadius());
+		hitpointBar.setWidth(hitpoints / maximumHitpoints * (TILE_SIDE - 2));
+		hitpointBar.relocate(getPoint().getX() - getBase().getRadius(), getPoint().getY() - getBase().getRadius() - 5);
 	}
 
 	public boolean acceptable(Cell r) {
-		return r.available;
+		return r.isAvailable();
 	}
 
 	public boolean alive() {
@@ -114,7 +110,7 @@ public abstract class Enemy extends MovableObject {
 			hitpointBar.setVisible(false);
 		}
 	}
-	
+
 	public void receiveDamage(double dmg) {
 		hitpoints -= dmg;
 	}
@@ -122,7 +118,6 @@ public abstract class Enemy extends MovableObject {
 	public abstract void specialMechanic(long now);
 
 	public abstract void destroyMechanics();
-
 
 	public double getHitpoints() {
 		return hitpoints;
@@ -132,10 +127,8 @@ public abstract class Enemy extends MovableObject {
 		this.hitpoints = hitpoints;
 	}
 
-
 	public String getFlying() {
 		return flying;
 	}
-
 
 }

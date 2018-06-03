@@ -3,16 +3,19 @@ package types.tower;
 import core.BulletType;
 import core.Maps;
 import core.Tower;
+import core.primitive.Point;
 import javafx.scene.paint.Color;
 import types.bullet.WeakUpgrFlyingBullet;
 
 import static core.World.TILE_SIDE;
 
+import java.time.Duration;
+
 
 public class WeakUpgrFlyingTower extends Tower {
 
 	public static final Color color = Color.FORESTGREEN;
-	public static final long cooldown = 500_000_000L;
+	public static final Duration cooldown = Duration.ofNanos(500_000_000L);
 	public static final double range = TILE_SIDE * 2;
 	public static final long cost = 20;
 	public static final BulletType bullet = new WeakUpgrFlyingBullet();
@@ -22,8 +25,8 @@ public class WeakUpgrFlyingTower extends Tower {
 		Maps.storeImage(src);
 	}
 
-	public WeakUpgrFlyingTower(double x, double y) {
-		super(src, x, y, color, 100, 20, cooldown, bullet, "F");
+	public WeakUpgrFlyingTower(Point point) {
+		super(src, point, color, range, cost, cooldown, bullet);
 	}
 
 }

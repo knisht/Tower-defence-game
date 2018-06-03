@@ -2,6 +2,7 @@ package types.cell;
 
 import core.Cell;
 import core.GameObject;
+import core.primitive.Point;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -15,16 +16,6 @@ public abstract class BuildableCell<T extends GameObject> extends Cell
 
 	@Override
 	public abstract void handle(MouseEvent event);
-
-	@Override
-	public double getX() {
-		return x;
-	}
-
-	@Override
-	public double getY() {
-		return y;
-	}
 
 	public abstract void build(T target);
 }

@@ -5,6 +5,7 @@ import java.util.Deque;
 import java.util.List;
 import java.util.Set;
 
+import core.primitive.Point;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -18,17 +19,13 @@ public class World {
 	public static final int WINDOW_WIDTH = FIELD_WIDTH;
 	public static final int WINDOW_HEIGHT = FIELD_HEIGHT + 100;
 	public static int TILE_SIDE = 1;
-	public static int TILES_AMOUNT_WIDTH = FIELD_WIDTH / TILE_SIDE; 
+	public static int TILES_AMOUNT_WIDTH = FIELD_WIDTH / TILE_SIDE;
 	public static int TILES_AMOUNT_HEIGHT = FIELD_HEIGHT / TILE_SIDE;
 	public static final int LEVEL_AMOUNT = 5;
 	public static final String sources = "src" + File.separator + "main";
 	public static final String resources = sources + File.separator + "resources";
 	public static final String imgDir = resources + File.separator + "img";
 	public static final String leveldataDir = resources + File.separator + "data";
-
-	public static double dist(double x1, double y1, double x2, double y2) {
-		return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-	}
 
 	public static Field field;
 	public static boolean gameLostState;
@@ -53,7 +50,7 @@ public class World {
 	public static long fullPauseTime;
 	public static long startMoment;
 	public static long goldAmount;
-	//public static long[] cost;
+	// public static long[] cost;
 	public static long goldInterval = 5_000_000_000L;
 	public static long goldIncome = 30;
 	public static long defaultGoldIncome = 30;

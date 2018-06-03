@@ -35,8 +35,7 @@ public class RoadCell extends BuildableCell<Bomb> implements EventHandler<MouseE
 		if (goldAmount < target.getCost())
 			return;
 		goldAmount -= target.getCost();
-		target.setX(x);
-		target.setY(y);
+		target.setPoint(getPoint());
 		target.explode();
 		
 	}

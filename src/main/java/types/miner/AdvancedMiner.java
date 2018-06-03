@@ -2,6 +2,7 @@ package types.miner;
 
 import core.Maps;
 import core.Miner;
+import core.primitive.Point;
 import javafx.scene.paint.Color;
 
 public class AdvancedMiner extends Miner {
@@ -15,8 +16,8 @@ public class AdvancedMiner extends Miner {
 		Maps.storeImage(src);
 	}
 
-	public AdvancedMiner(double x, double y) {
-		super(src, x, y, color, income, cost);
+	public AdvancedMiner(Point point) {
+		super(src, point, color, income, cost);
 	}
 
 }

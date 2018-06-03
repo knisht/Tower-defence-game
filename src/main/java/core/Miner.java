@@ -4,6 +4,9 @@ import javafx.scene.paint.Color;
 import types.cell.MinerCell;
 import static core.World.*;
 
+import core.primitive.Point;
+import core.primitive.Speed;
+
 public class Miner extends MovableObject {
 
 	public Color color;
@@ -11,8 +14,8 @@ public class Miner extends MovableObject {
 	public MinerCell cell;
 	public long income;
 
-	public Miner(String src, double x, double y, Color color, long income, long cost) {
-		super(src, x, y, TILE_SIDE / 2, color, 0, 0);
+	public Miner(String src, Point point, Color color, long income, long cost) {
+		super(src, point, TILE_SIDE / 2, color, new Speed(0, 0));
 		this.income = income;
 		this.cost = cost;
 		this.setMouseTransparent(true);
@@ -26,6 +29,5 @@ public class Miner extends MovableObject {
 		miners.remove(this);
 		root.getChildren().remove(this);
 	}
-
 
 }
