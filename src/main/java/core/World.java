@@ -51,7 +51,6 @@ public class World {
 	public static long fullPauseTime;
 	public static long startMoment;
 	public static long goldAmount;
-	// public static long[] cost;
 	public static long goldInterval = 5_000_000_000L;
 	public static long goldIncome = 30;
 	public static long defaultGoldIncome = 30;
@@ -68,11 +67,6 @@ public class World {
 	// TODO save
 	// What should I do to make interesting game?
 	// TODO The hardest, graphics
-	// TODO List of upgrades in the right part of screen? // Nah, my system of
-	// upgrades is suitable enough
 	// TODO Very optional, some plot
-	// TODO Greeting in the beginning of level
-	// What about gui?
-	// TODO Tutorial?
 
 }

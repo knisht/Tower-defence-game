@@ -37,6 +37,7 @@ public class Tower extends GameObject implements EventHandler<MouseEvent> {
 		if (!active || now-lastShoot < cooldown)
 			return null;
 		Enemy nearest = null;
+		Enemy nearestImportant = null;
 		double minrst = Double.POSITIVE_INFINITY;
 		for (Enemy enemy : enemies) {
 			if (enemy.alive() && possibleToShoot(bullet.damageType, enemy.getFlying())) {
@@ -45,9 +46,15 @@ public class Tower extends GameObject implements EventHandler<MouseEvent> {
 					nearest = enemy;
 					minrst = rst;
 				}
+				if (rst<range && enemy.isImportant()) 
+					nearestImportant = enemy;
 			}
 		}
+		if (nearestImportant!=null) {
+			nearest = nearestImportant;
+			}
 		if (minrst < range) {
+			
 			if (nearest.alive()) {
 				lastShoot = now;
 				return new Bullet(getPoint(), nearest.getPoint(), bullet);
