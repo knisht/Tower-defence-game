@@ -98,5 +98,16 @@ public class TableScreen {
 		mainStage.setScene(scene);
 		root.getChildren().add(primaryLayout);
 	}
+	
+	public static void showGreeting(Group root, String levelIntro) {
+		StackPane table = new StackPane();
+		Rectangle background = new Rectangle(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+		background.setFill(Color.LINEN);
+		Text text = new Text(levelIntro);
+		table.getChildren().addAll(background, text);
+		table.relocate(WINDOW_WIDTH/4, WINDOW_HEIGHT/4);
+		root.getChildren().add(table);
+		table.setOnMouseClicked(event -> {core.World.activePause = false; root.getChildren().remove(table);});
+	}
 
 }

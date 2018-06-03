@@ -9,13 +9,12 @@ import types.bullet.SniperBullet;
 
 import static core.World.*;
 
-import java.time.Duration;
 
 
 public class SniperTower extends Tower {
 
 	public static final Color color = Color.DEEPSKYBLUE;
-	public static final Duration cooldown = Duration.ofNanos(3_000_000_000L);
+	public static final long cooldown = 3_000_000_000L;
 	public static final double range = TILE_SIDE * 10;
 	public static final long cost = 60;
 	public static final BulletType bullet = new SniperBullet();

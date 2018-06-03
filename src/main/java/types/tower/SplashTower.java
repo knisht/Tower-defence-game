@@ -9,13 +9,12 @@ import types.bullet.SplashBullet;
 
 import static core.World.*;
 
-import java.time.Duration;
 
 
 public class SplashTower extends Tower {
 
 	public static final Color color = Color.DARKBLUE;
-	public static final Duration cooldown = Duration.ofNanos(3_000_000_000L);
+	public static final long cooldown = 4_000_000_000L;
 	public static final double range = TILE_SIDE * 3;
 	public static final long cost = 60;
 	public static final BulletType bullet = new SplashBullet();

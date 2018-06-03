@@ -2,8 +2,6 @@ package core;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.LinkedHashSet;
 
 import javafx.animation.AnimationTimer;
@@ -119,6 +117,8 @@ public class Main extends Application {
 
 		greetingClosed = false;
 		actionHappensState = true;
+		activePause = true;
+		TableScreen.showGreeting(root, World.levelIntro);
 
 	}
 
@@ -136,7 +136,7 @@ public class Main extends Application {
 		}
 		for (Tower tower : towers) {
 			if (tower.active) {
-				Bullet bullet = tower.shoot(Instant.now().minus(Duration.ofNanos(fullPauseTime)));
+				Bullet bullet = tower.shoot(actionTime);
 				if (bullet != null) {
 					bullets.add(bullet);
 				}

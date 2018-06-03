@@ -116,6 +116,11 @@ public class Field extends StackPane {
 					enemiesStack.addLast(new Boss(start));
 				enemiesOutcomeTime.addLast(in.nextLong() * 1_000_000L);
 			}
+			StringBuilder intro = new StringBuilder();
+			while (in.hasNextLine()) {
+				intro.append(in.nextLine()).append("\n");
+			}
+			levelIntro = intro.toString();
 		} catch (FileNotFoundException e) {
 			System.err.println("File not found: " + levelmappath);
 		}

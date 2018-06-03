@@ -34,6 +34,7 @@ public class UsualBullet extends BulletType {
 				if (enemy.alive() && Tower.possibleToShoot(damageType, enemy.getFlying())
 						&& enemy.getPoint().distance(point) <= enemy.getBase().getRadius()) {
 					enemy.receiveDamage(damage);
+					break;
 				}
 			}
 			return true;

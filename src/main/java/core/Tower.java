@@ -7,8 +7,6 @@ import types.cell.TowerCell;
 
 import static core.World.*;
 
-import java.time.Duration;
-import java.time.Instant;
 
 import core.primitive.Point;
 
@@ -16,27 +14,27 @@ public class Tower extends GameObject implements EventHandler<MouseEvent> {
 
 	private final double range;
 	private final long cost;
-	private final Duration cooldown;
+	private final long cooldown;
 	private final BulletType bullet;
-	private Instant lastShoot;
+	private long lastShoot;
 	public boolean active;
 	private TowerCell cell;
 
-	public Tower(String src, Point point, Color color, double range, long cost, Duration cooldown, BulletType bullet) {
+	public Tower(String src, Point point, Color color, double range, long cost, long cooldown, BulletType bullet) {
 		super(src, point, TILE_SIDE / 2 - 3, color);
 		this.range = range;
 		this.cost = cost;
 		this.cooldown = cooldown;
 		this.bullet = bullet;
-		lastShoot = Instant.now();
+		lastShoot = 0;
 		super.relocate(point.getX() + TILE_SIDE / 2 - base.getRadius(),
 				point.getY() + TILE_SIDE / 2 - base.getRadius());
 		active = true;
 		super.setOnMouseClicked(this);
 	}
 
-	public Bullet shoot(Instant nowtime) {
-		if (!active || Duration.between(lastShoot, nowtime).toNanos() < cooldown.toNanos())
+	public Bullet shoot(long now) {
+		if (!active || now-lastShoot < cooldown)
 			return null;
 		Enemy nearest = null;
 		double minrst = Double.POSITIVE_INFINITY;
@@ -51,7 +49,7 @@ public class Tower extends GameObject implements EventHandler<MouseEvent> {
 		}
 		if (minrst < range) {
 			if (nearest.alive()) {
-				lastShoot = nowtime;
+				lastShoot = now;
 				return new Bullet(getPoint(), nearest.getPoint(), bullet);
 			}
 		}
@@ -84,7 +82,7 @@ public class Tower extends GameObject implements EventHandler<MouseEvent> {
 		return cost;
 	}
 
-	public Duration getCooldown() {
+	public long getCooldown() {
 		return cooldown;
 	}
 

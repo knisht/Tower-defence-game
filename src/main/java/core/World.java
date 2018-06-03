@@ -36,6 +36,7 @@ public class World {
 	public static boolean windowsClosed;
 	public static boolean activePause;
 	public static int selectedLevel;
+	public static String levelIntro;
 
 	public static Set<Bullet> bullets;
 	public static Set<Enemy> enemies;
@@ -63,7 +64,6 @@ public class World {
 	public static List<InformationCell> cells;
 
 	// TODO music
-	// TODO Bomb explosion
 	// TODO configuration
 	// TODO save
 	// What should I do to make interesting game?
