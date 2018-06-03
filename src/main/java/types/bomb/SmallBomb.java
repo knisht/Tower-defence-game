@@ -13,14 +13,16 @@ public class SmallBomb extends Bomb {
 	public static final double damage = 50;
 	public static final double splashArea = TILE_SIDE;
 	public static final long cost = 30;
-	
 	public static String src = "grenade.png";
+	public static String burstSrc = "burst.png";
+	
 	static {
 		Maps.storeImage(src);
+		Maps.storeImage(burstSrc);
 	}
 
 	public SmallBomb(Point point) {
-		super(src, point, color, damage, splashArea, cost);
+		super(src, burstSrc, point, color, damage, splashArea, cost);
 	}
 
 }

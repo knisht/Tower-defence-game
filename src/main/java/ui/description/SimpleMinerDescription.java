@@ -1,9 +1,7 @@
 package ui.description;
 
-import core.Bomb;
 import core.Miner;
 import core.primitive.Point;
-import types.bomb.MiddleBomb;
 import types.miner.SimpleMiner;
 import ui.BuildDescription;
 

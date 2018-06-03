@@ -104,6 +104,7 @@ public class Main extends Application {
 		enemies = new LinkedHashSet<>();
 		miners = new LinkedHashSet<>();
 		infowindows = new LinkedHashSet<>();
+		bombs = new LinkedHashSet<>();
 		// cost = new long[10]; why?
 		goldtime = -1;
 		goldAmount = 0;
@@ -160,6 +161,9 @@ public class Main extends Application {
 		}
 		for (Enemy enemy : enemies) {
 			enemy.tryToDie();
+		}
+		for (Bomb bomb : bombs) {
+			bomb.burn();
 		}
 		if (gameWonState || gameLostState) {
 			actionHappensState = false;

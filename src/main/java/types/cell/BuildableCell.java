@@ -2,7 +2,6 @@ package types.cell;
 
 import core.Cell;
 import core.GameObject;
-import core.primitive.Point;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;

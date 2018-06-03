@@ -2,7 +2,6 @@ package ui.description;
 
 import core.Miner;
 import core.primitive.Point;
-import types.miner.AdvancedMiner;
 import types.miner.GreatMiner;
 import ui.BuildDescription;
 

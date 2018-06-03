@@ -5,7 +5,6 @@ import java.util.Deque;
 import java.util.List;
 import java.util.Set;
 
-import core.primitive.Point;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -42,6 +41,7 @@ public class World {
 	public static Set<Enemy> enemies;
 	public static Set<Tower> towers;
 	public static Set<Miner> miners;
+	public static Set<Bomb> bombs;
 	public static Deque<Enemy> enemiesStack;
 	public static Deque<Long> enemiesOutcomeTime;
 

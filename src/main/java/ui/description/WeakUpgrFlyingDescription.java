@@ -1,9 +1,7 @@
 package ui.description;
 
-import core.Bomb;
 import core.Tower;
 import core.primitive.Point;
-import types.bomb.MiddleBomb;
 import types.tower.WeakUpgrFlyingTower;
 import ui.BuildDescription;
 

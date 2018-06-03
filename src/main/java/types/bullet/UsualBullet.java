@@ -1,6 +1,5 @@
 package types.bullet;
 
-import static core.World.TILE_SIDE;
 import static core.World.enemies;
 
 import core.BulletType;
