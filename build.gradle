@@ -1,8 +1,18 @@
-apply plugin: 'java'
-apply plugin: 'application'
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.7'
+}
+
+javafx {
+    modules = [ 'javafx.controls' ]
+    version = "11.0.1"
+}
+
+//testCompile "net.bytebuddy:byte-buddy:1.8.22"
+//testCompile "net.bytebuddy:byte-buddy-agent:1.8.22"
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 mainClassName = 'core.Main'
