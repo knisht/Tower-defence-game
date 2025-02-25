@@ -2,7 +2,7 @@ Exception in thread "JavaFX Application Thread" java.util.ConcurrentModification
 	at java.util.LinkedHashMap$LinkedHashIterator.nextNode(LinkedHashMap.java:719)
 	at java.util.LinkedHashMap$LinkedKeyIterator.next(LinkedHashMap.java:742)
 	at core.Main.actionLoop(Main.java:162)
-	at core.Main.access$1(Main.java:125)
+	at core.Main.access$1(M.java:125)
 	at core.Main$1.handle(Main.java:61)
 	at javafx.animation.AnimationTimer$AnimationTimerReceiver.lambda$handle$485(AnimationTimer.java:57)
 	at java.security.AccessController.doPrivileged(Native Method)
